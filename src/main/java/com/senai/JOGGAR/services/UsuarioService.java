@@ -1,6 +1,7 @@
 package com.senai.JOGGAR.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,17 @@ public class UsuarioService {
         if (repository.existsById(usuario.getId())) {
             return repository.save(usuario);
         } else {
+            return null;
+        }
+    }
+
+    public Usuario findByEmail(String email) {
+        var result = repository.findByEmail(email);
+
+        if (result.isPresent()){
+            return result.get();
+        } else {
+            // throw new UserNotFoundException();
             return null;
         }
     }

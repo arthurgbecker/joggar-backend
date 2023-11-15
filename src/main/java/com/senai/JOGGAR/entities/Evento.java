@@ -35,6 +35,7 @@ public class Evento {
 
     @Enumerated(EnumType.STRING)
     private Atividade atividade;
+    
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
 
