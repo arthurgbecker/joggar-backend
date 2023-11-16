@@ -6,5 +6,5 @@ import lombok.Data;
 @Data @AllArgsConstructor
 public class EventoOutputDTO{
     private Long id;
-    private String titulo;    
+    private String titleEvento;  
 }
