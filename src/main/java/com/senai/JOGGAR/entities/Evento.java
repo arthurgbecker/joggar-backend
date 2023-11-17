@@ -3,7 +3,6 @@ package com.senai.JOGGAR.entities;
 import java.sql.Date;
 // import java.text.ParseException;
 // import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 import com.senai.JOGGAR.dtos.EventoInputDTO;
@@ -18,14 +17,13 @@ public class Evento {
     }
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String titulo;
-    private String imagemDeCapa;
-    private Date data;
-    private Calendar hora;
-    private String plataforma;
-    private String privacidade;
-    private String descricao;
-    private Character generoEvento;
+    private String tituloEvento;
+    private String imagemEvento;
+    private Date dataEvento;
+    private String horaEvento;
+    private String privacidadeEvento;
+    private String descricaoEvento;
+    private String publicoEvento;
 
     @ManyToOne
     private Endereco endereco;
