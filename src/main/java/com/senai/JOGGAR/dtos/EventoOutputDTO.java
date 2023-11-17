@@ -1,6 +1,7 @@
 package com.senai.JOGGAR.dtos;
 
 import java.sql.Date;
+import java.sql.Time;
 
 import com.senai.JOGGAR.entities.Atividade;
 import com.senai.JOGGAR.entities.Endereco;
@@ -15,7 +16,7 @@ public class EventoOutputDTO{
     private Long id;
     private String tituloEvento;
     private String imagemEvento;
-    private Date dataEvento;
+    private String dataEvento;
     private String horaEvento;
     private Endereco endereco;
     private String privacidadeEvento;

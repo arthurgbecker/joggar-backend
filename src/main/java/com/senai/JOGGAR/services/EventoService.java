@@ -32,7 +32,7 @@ public class EventoService {
         dtoSaida.setDataEvento(evento.getDataEvento());
         dtoSaida.setHoraEvento(evento.getHoraEvento());
         dtoSaida.setPrivacidadeEvento(evento.getPrivacidadeEvento());
-        // dtoSaida.setEndereco(evento.getEndereco());
+        dtoSaida.setEndereco(evento.getEndereco());
         dtoSaida.setDescricaoEvento(evento.getDescricaoEvento());
         dtoSaida.setAtividade(evento.getAtividade());
         dtoSaida.setPublicoEvento(evento.getPublicoEvento());
@@ -47,7 +47,7 @@ public class EventoService {
         evento.setDataEvento(dto.getDataEvento());
         evento.setHoraEvento(dto.getHoraEvento());
         evento.setPrivacidadeEvento(dto.getPrivacidadeEvento());
-        // evento.setEndereco(dto.getEndereco());
+        evento.setEndereco(dto.getEndereco());
         evento.setDescricaoEvento(dto.getDescricaoEvento());
         evento.setAtividade(dto.getAtividade());
         evento.setPublicoEvento(dto.getPublicoEvento());

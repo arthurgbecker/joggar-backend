@@ -1,8 +1,5 @@
 package com.senai.JOGGAR.entities;
 
-import java.sql.Date;
-// import java.text.ParseException;
-// import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.senai.JOGGAR.dtos.EventoInputDTO;
@@ -19,13 +16,13 @@ public class Evento {
     private Long id;
     private String tituloEvento;
     private String imagemEvento;
-    private Date dataEvento;
+    private String dataEvento;
     private String horaEvento;
     private String privacidadeEvento;
     private String descricaoEvento;
     private String publicoEvento;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
 
     @ManyToMany(mappedBy="eventos")
