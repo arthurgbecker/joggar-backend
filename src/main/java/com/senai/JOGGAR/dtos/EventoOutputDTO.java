@@ -1,8 +1,5 @@
 package com.senai.JOGGAR.dtos;
 
-import java.sql.Date;
-import java.sql.Time;
-
 import com.senai.JOGGAR.entities.Atividade;
 import com.senai.JOGGAR.entities.Endereco;
 import com.senai.JOGGAR.entities.Tipo;
