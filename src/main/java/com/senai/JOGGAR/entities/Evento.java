@@ -2,8 +2,6 @@ package com.senai.JOGGAR.entities;
 
 import java.util.List;
 
-import com.senai.JOGGAR.dtos.EventoInputDTO;
-
 import jakarta.persistence.*;
 import lombok.*;
 
