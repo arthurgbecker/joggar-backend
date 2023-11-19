@@ -60,10 +60,8 @@ public class EventoService {
         return converterEntidadeParaDTO(evento);
     }
 
-    public List<EventoOutputDTO> list(Pageable page){
-        return repository.findAll(page).stream().map(p->converterEntidadeParaDTO(p)).toList();
-        // List<Evento> eventos = (List<Evento>) repository.findAll(/*Example.of(EVENTO CRIADO PELO JSON VIA BUSCA)*/);
-        // return eventos;
+    public List<EventoOutputDTO> list(){
+        return repository.findAll().stream().map(p->converterEntidadeParaDTO(p)).toList();
     }
 
     @Transactional

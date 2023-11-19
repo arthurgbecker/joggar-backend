@@ -10,8 +10,7 @@ import lombok.*;
 @Entity  
 @Data @AllArgsConstructor @NoArgsConstructor 
 public class Evento {
-    public Evento(EventoInputDTO dto) {
-    }
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String tituloEvento;
@@ -22,7 +21,7 @@ public class Evento {
     private String descricaoEvento;
     private String publicoEvento;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Endereco endereco;
 
     @ManyToMany(mappedBy="eventos")

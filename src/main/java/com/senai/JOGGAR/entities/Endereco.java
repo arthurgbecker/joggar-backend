@@ -8,10 +8,11 @@ import lombok.*;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Endereco {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String local;
-    
-    @OneToMany(mappedBy="endereco")
+
+    @OneToMany(mappedBy = "endereco")
     private List<Evento> evento;
 }

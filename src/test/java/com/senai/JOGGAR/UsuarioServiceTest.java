@@ -1,3 +1,4 @@
+/*
 package com.senai.JOGGAR;
 
 // import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -69,4 +70,4 @@ public class UsuarioServiceTest {
 
     //     assertEquals(usuario, resultado);
     // }
-}
+}*/

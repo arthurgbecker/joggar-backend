@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/eventos")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class EventoController {
 
     @Autowired
@@ -49,8 +49,8 @@ public class EventoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EventoOutputDTO>> getList(Pageable page) {
-        List<EventoOutputDTO> lista = service.list(page);
+    public ResponseEntity<List<EventoOutputDTO>> getList() {
+        List<EventoOutputDTO> lista = service.list();
         return ResponseEntity.ok(lista);
     }
 
