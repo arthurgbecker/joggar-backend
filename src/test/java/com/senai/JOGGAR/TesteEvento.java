@@ -1,4 +1,3 @@
-/*
 package com.senai.JOGGAR;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,4 +34,3 @@ public class TesteEvento {
         }
     }
 }
-*/
