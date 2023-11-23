@@ -42,6 +42,7 @@ public class EventoService {
 
     public Evento converterDtoParaEntidade(EventoInputDTO dto){
         Evento evento = new Evento();
+        evento.setId(dto.getId());
         evento.setTituloEvento(dto.getTituloEvento());
         evento.setImagemEvento(dto.getImagemEvento());
         evento.setDataEvento(dto.getDataEvento());
