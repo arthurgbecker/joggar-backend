@@ -30,19 +30,20 @@ public class EventoController {
     private EventoService service;
 
     @PostMapping
-    public ResponseEntity<EventoOutputDTO> post(@RequestBody @Valid EventoInputDTO evento){
-        EventoOutputDTO eventoCriado =  service.create(evento);
+    public ResponseEntity<EventoOutputDTO> post(@RequestBody @Valid EventoInputDTO evento) {
+        EventoOutputDTO eventoCriado = service.create(evento);
         return new ResponseEntity<EventoOutputDTO>(eventoCriado, HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<EventoOutputDTO> put(@RequestBody EventoInputDTO evento){
+    @PutMapping(value = "/eventos/{id}")
+    public ResponseEntity<EventoOutputDTO> put(@PathVariable Long id,
+            @RequestBody EventoInputDTO evento) {
         EventoOutputDTO eventoAtualizado = service.update(evento);
         return ResponseEntity.ok(eventoAtualizado);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
