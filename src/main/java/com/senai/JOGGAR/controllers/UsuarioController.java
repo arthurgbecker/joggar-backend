@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.senai.JOGGAR.dtos.UsuarioInputDTO;
-import com.senai.JOGGAR.entities.Usuario;
+import com.senai.JOGGAR.dtos.UsuarioOutputDTO;
 import com.senai.JOGGAR.services.UsuarioService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -28,38 +29,32 @@ public class UsuarioController {
     private UsuarioService service;
 
     @PostMapping
-    public ResponseEntity<Usuario> post(@RequestBody UsuarioInputDTO usuario){
-        Usuario usuarioCriado =  service.create(usuario, false);
-        return new ResponseEntity<Usuario>(usuarioCriado, HttpStatus.CREATED);
+    public ResponseEntity<UsuarioOutputDTO> post(@RequestBody @Valid UsuarioInputDTO usuario) {
+        UsuarioOutputDTO usuarioCriado = service.create(usuario);
+        return new ResponseEntity<UsuarioOutputDTO>(usuarioCriado, HttpStatus.CREATED);
     }
 
-    @PostMapping("/admin")
-    public ResponseEntity<Usuario> postAdmin(@RequestBody UsuarioInputDTO usuario){
-        Usuario usuarioCriado =  service.create(usuario, true);
-        return new ResponseEntity<Usuario>(usuarioCriado, HttpStatus.CREATED);
-    }
-
-    @PutMapping
-    public ResponseEntity<Usuario> put(@RequestBody Usuario usuario){
-        Usuario usuarioAtualizado = service.update(usuario);
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioOutputDTO> put(@PathVariable Long id, @RequestBody UsuarioInputDTO usuario) {
+        UsuarioOutputDTO usuarioAtualizado = service.update(usuario);
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> getList(){
-        List<Usuario> lista = service.list();
+    public ResponseEntity<List<UsuarioOutputDTO>> getList() {
+        List<UsuarioOutputDTO> lista = service.list();
         return ResponseEntity.ok(lista);
-    } 
+    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getRead(@PathVariable Long id){
-        Usuario usuarioEncontrado = service.read(id);
+    public ResponseEntity<UsuarioOutputDTO> getRead(@PathVariable Long id) {
+        UsuarioOutputDTO usuarioEncontrado = service.read(id);
         return ResponseEntity.ok(usuarioEncontrado);
     }
 }

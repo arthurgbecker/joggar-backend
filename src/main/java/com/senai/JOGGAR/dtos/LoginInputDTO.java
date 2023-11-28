@@ -7,8 +7,8 @@ import lombok.Data;
 @Data @AllArgsConstructor
 public class LoginInputDTO {
     @NotBlank
-    private String login;
+    private String email;
 
     @NotBlank
-    private String password;
+    private String senha;
 }
