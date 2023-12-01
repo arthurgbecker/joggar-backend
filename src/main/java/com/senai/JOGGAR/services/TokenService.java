@@ -1,5 +1,6 @@
 package com.senai.JOGGAR.services;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -9,42 +10,52 @@ import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+// import com.senai.JOGGAR.entities.Usuario;
 
 @Service
 public class TokenService {
-    @Value("${api.secret}")
+    @Value("${api.security.token.secret}")
     private String secret;
-
-    @Value("${api.issuer}")
+    @Value("${api.security.token.issuer}")
     private String issuer;
+    @Value("${api.security.token.expiration_min}")
+    private String expirationMin;
 
-    @Value("${api.expirationMinutes}")
-    private String expirationMinutes;
-
-    public String generateToken(UserDetails usuario) {
-        var algorithm = Algorithm.HMAC256(secret);
-        var token = JWT
-                .create()
-                .withExpiresAt(LocalDateTime.now().plusMinutes(Long.parseLong(expirationMinutes))
-                        .toInstant(ZoneOffset.of("-03:00")))
-                .withSubject(usuario.getUsername())
-                .withIssuer(issuer)
-                .sign(algorithm);
-        return token;
+    public String gerarToken(UserDetails usuario) {
+        try {
+            var algoritmo = Algorithm.HMAC256(secret);
+            return JWT
+                    .create()
+                    .withIssuer(issuer)
+                    .withSubject(usuario.getUsername())
+                    .withExpiresAt(dataExpiracao())
+                    .sign(algoritmo);
+        } catch (JWTCreationException exception) {
+            throw new RuntimeException("Erro ao gerar token.", exception);
+        }
     }
 
-    public String getEmail(String token) {
+    private Instant dataExpiracao() {
+        return LocalDateTime
+                .now()
+                .plusMinutes(Long.parseLong(expirationMin))
+                .toInstant(ZoneOffset.of("-03:00"));
+    }
+
+    public String getEmail(String tokenJWT) {
         try {
-            var algorithm = Algorithm.HMAC256(secret);
+            var algoritmo = Algorithm.HMAC256(secret);
             return JWT
-                    .require(algorithm)
+                    .require(algoritmo)
                     .withIssuer(issuer)
                     .build()
-                    .verify(token)
+                    .verify(tokenJWT)
                     .getSubject();
         } catch (JWTVerificationException exception) {
             throw new RuntimeException("Token inválido ou expirado.");
         }
     }
+
 }

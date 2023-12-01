@@ -12,12 +12,11 @@ import com.senai.JOGGAR.dtos.UsuarioInputDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 
-public class Usuario implements UserDetails {
+@Entity
+@Data @AllArgsConstructor @NoArgsConstructor
+
+public class Usuario implements UserDetails{
 
     public Usuario(UsuarioInputDTO dto) {
         this.nome = dto.getNome();
@@ -29,13 +28,14 @@ public class Usuario implements UserDetails {
         this.isAdmin = dto.getIsAdmin();
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String nascimento;
     private String generoUsuario;
+    @Column(unique = true)
     private String email;
+    @Column(nullable = false)
     private String senha;
     private String telefone;
     private Boolean isAdmin;
@@ -48,9 +48,9 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (isAdmin) {
+        if(this.isAdmin != null && this.isAdmin == true){
             return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } else {
+        }else{
             return null;
         }
     }

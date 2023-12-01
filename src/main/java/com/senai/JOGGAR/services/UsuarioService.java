@@ -17,10 +17,9 @@ import com.senai.JOGGAR.entities.Usuario;
 import com.senai.JOGGAR.repositories.UsuarioRepository;
 
 @Service
-public class UsuarioService implements UserDetailsService{
+public class UsuarioService implements UserDetailsService {
     @Autowired
     private UsuarioRepository repository;
-
 
     @Transactional
     public UsuarioOutputDTO create(UsuarioInputDTO dto) {
@@ -31,7 +30,7 @@ public class UsuarioService implements UserDetailsService{
         return converterEntidadeParaDTO(usuarioCriado);
     }
 
-     public UsuarioOutputDTO converterEntidadeParaDTO(Usuario usuario){
+    public UsuarioOutputDTO converterEntidadeParaDTO(Usuario usuario) {
         UsuarioOutputDTO dtoSaida = new UsuarioOutputDTO();
         dtoSaida.setId(usuario.getId());
         dtoSaida.setNome(usuario.getNome());
@@ -44,67 +43,67 @@ public class UsuarioService implements UserDetailsService{
         return dtoSaida;
     }
 
-    public Usuario converterDtoParaEntidade(UsuarioInputDTO dto){
+    public Usuario converterDtoParaEntidade(UsuarioInputDTO dto, Usuario user) {
         Usuario usuario = new Usuario();
         usuario.setId(dto.getId());
         usuario.setNome(dto.getNome());
         usuario.setNascimento(dto.getNascimento());
         usuario.setGeneroUsuario(dto.getGeneroUsuario());
-        usuario.setEmail(dto.getEmail());
-        usuario.setSenha(dto.getSenha());
+        if (user != null) {
+            usuario.setEmail(user.getEmail());
+            usuario.setSenha(user.getSenha());
+        }
+
         usuario.setTelefone(dto.getTelefone());
         usuario.setIsAdmin(dto.getIsAdmin());
         return usuario;
     }
 
-    public UsuarioOutputDTO read(Long id){
+    public UsuarioOutputDTO read(Long id) {
         Usuario usuario = repository.findById(id).get();
         return converterEntidadeParaDTO(usuario);
     }
 
-    public List<UsuarioOutputDTO> list(){
-        return repository.findAll().stream().map(p->converterEntidadeParaDTO(p)).toList();
+    public List<UsuarioOutputDTO> list() {
+        return repository.findAll().stream().map(p -> converterEntidadeParaDTO(p)).toList();
     }
 
     @Transactional
-    public void delete(Long id){
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 
     @Transactional
-    public UsuarioOutputDTO update(UsuarioInputDTO usuario){
-        if(usuario.getId() == null){
-            usuario.setId(99l);
-        }
-        if(repository.existsById(usuario.getId())){
-            Usuario usuarioAtualizado = repository.save(converterDtoParaEntidade(usuario));
+    public UsuarioOutputDTO update(UsuarioInputDTO usuario) {
+        if (repository.existsById(usuario.getId())) {
+            var user = repository.findById(usuario.getId()).get();
+            Usuario usuarioAtualizado = repository.save(converterDtoParaEntidade(usuario, user));
             return converterEntidadeParaDTO(usuarioAtualizado);
-        }else{
+        } else {
             return null;
         }
     }
 
-
     // public Usuario findByEmail(String email) {
-    //     var result = repository.findByEmail(email);
+    // var result = repository.findByEmail(email);
 
-    //     if (result.isPresent()){
-    //         return result.get();
-    //     } else {
-    //         // throw new UserNotFoundException();
-    //         return null;
-    //     }
+    // if (result.isPresent()){
+    // return result.get();
+    // } else {
+    // // throw new UserNotFoundException();
+    // return null;
+    // }
     // }
 
-        @Override
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario user = repository.findByEmail(username);
-        if(user != null){
-           return org.springframework.security.core.userdetails.User.builder()
-            .password(user.getSenha())
-            .username(user.getEmail())
-        .build();
-        }else{
+        if (user != null) {
+            return org.springframework.security.core.userdetails.User.builder()
+                    .password(user.getSenha())
+                    .username(user.getEmail())
+                    .build();
+        } else {
             throw new UsernameNotFoundException("");
         }
     }
